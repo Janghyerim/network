@@ -15,12 +15,17 @@ public class TcpIpMultiChatClient {
 		try {
 			Socket socket = new Socket("192.168.0.62",7777);
 			System.out.println("서버에 연결됨");
+			Thread sender = new Thread(new ClientSender(socket,nickName));
+			Thread receiver = new Thread(new ClientReceiver(socket));
 			
+			sender.start();
+			receiver.start();
 			
+		}catch(UnknownHostException e) {
 			
-		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			
 			e.printStackTrace();
 		}
 		
